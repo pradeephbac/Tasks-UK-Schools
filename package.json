@@ -1,0 +1,34 @@
+{
+  "name": "task-assigner",
+  "version": "1.0.0",
+  "description": "This project is created for Phivos L.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pradeephbac/Tasks-UK-Schools.git"
+  },
+  "keywords": [
+    "MEAN",
+    "Angular5",
+    "MongoDB"
+  ],
+  "author": "Chamal Pradeep",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pradeephbac/Tasks-UK-Schools/issues"
+  },
+  "homepage": "https://github.com/pradeephbac/Tasks-UK-Schools#readme",
+  "dependencies": {
+    "async": "^2.6.0",
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "^1.18.2",
+    "cors": "^2.8.4",
+    "express": "^4.16.2",
+    "jsonwebtoken": "^8.1.0",
+    "mongoose": "^5.0.0-rc2",
+    "underscore": "^1.8.3"
+  }
+}
