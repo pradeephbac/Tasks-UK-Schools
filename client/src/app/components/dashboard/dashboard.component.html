@@ -1,0 +1,90 @@
+<!--h5 class="page-header">Welcome <span style="color: #ddd">{{loggedUser?.username}}</span></h5-->
+<div class="container">
+  <div class="analys-header row" *ngIf="isTaskLoaded">
+
+    <div class="task-amount-cage col-md-2" [ngClass]="{'active-cage' : activeClass === 'analytics'}" (click)="selectCage('analytics')">
+      <span class="amount-icon analytics">
+        <i class="fa fa-pie-chart"></i>
+      </span>
+      <p class="task-title">
+        <u> Analytics </u>
+      </p>
+    </div>
+
+    <div class="task-amount-cage col-md-2" [ngClass]="{'active-cage' : activeClass === 'tasks'}" (click)="selectCage('tasks')">
+      <span class="amount-icon">
+        <i class="fa fa-tasks"></i>
+      </span>
+      <span class="task-amount">{{taskInstances.length}}</span>
+      <p class="task-title">
+        <u> Tasks</u>
+      </p>
+    </div>
+
+    <div class="task-amount-cage col-md-2" [ngClass]="{'active-cage' : activeClass === 'in-progress'}" (click)="selectCage('in-progress')">
+      <span class="amount-icon">
+        <i class="fa fa-spinner"></i>
+      </span>
+      <span class="task-amount">{{taskInstances.length}}</span>
+      <p class="task-title">
+        <u> in-progress</u>
+      </p>
+    </div>
+
+    <div class="task-amount-cage col-md-2" [ngClass]="{'active-cage' : activeClass === 'completed'}" (click)="selectCage('completed')">
+      <span class="amount-icon">
+        <i class="fa fa-list-alt"></i>
+      </span>
+      <span class="task-amount">{{taskInstances.length}}</span>
+      <p class="task-title">
+        <u> completed </u>
+      </p>
+    </div>
+
+    <div class="task-amount-cage col-md-2" [ngClass]="{'active-cage' : activeClass === 'overdue'}" (click)="selectCage('overdue')">
+      <span class="amount-icon">
+        <i class="fa fa-clock-o"></i>
+      </span>
+      <span class="task-amount">{{taskInstances.length}}</span>
+      <p class="task-title">
+        <u> overdue </u>
+      </p>
+    </div>
+  </div>
+  <div class="analys-header row" *ngIf="isAdminLoaded">
+      
+    <div class="task-amount-cage col-md-2" [ngClass]="{'active-cage' : activeClass === 'analytics'}" (click)="selectCage('analytics')">
+            <span class="amount-icon analytics">
+              <i class="fa fa-pie-chart"></i>
+            </span>
+            <p class="task-title">
+              <u> Analytics </u>
+            </p>
+    </div> 
+
+    <div class="task-amount-cage col-md-2" [ngClass]="{'active-cage' : activeClass === 'tasks'}" (click)="selectCage('tasks')">
+      <span class="amount-icon">
+        <i class="fa fa-tasks"></i>
+      </span>
+      <span class="task-amount">{{adminSchool.tasks.length}}</span>
+      <p class="task-title">
+        <u> Tasks </u>
+      </p>
+    </div>
+
+    <div class="task-amount-cage col-md-2" [ngClass]="{'active-cage' : activeClass === 'in-progress'}" (click)="selectCage('in-progress')">
+      <span class="amount-icon">
+        <i class="fa fa-users"></i>
+      </span>
+      <span class="task-amount">{{adminSchool.users.length}}</span>
+      <p class="task-title">
+        <u> users </u>
+      </p>
+    </div>
+  </div>
+
+
+  <div class="analys-body row">
+
+  </div>
+</div>

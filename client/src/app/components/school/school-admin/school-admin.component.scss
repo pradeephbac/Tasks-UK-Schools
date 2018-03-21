@@ -1,0 +1,240 @@
+.exercise-grid {
+    overflow-y: auto;
+    height: 100%;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    text-align: left;
+    .exercise-org {
+      float: left;
+      width: 240px;
+      background: #fff;
+      height: 280px;
+      border-radius: 2px;
+      list-style: none;
+      position: relative;
+      margin: 15px 15px 25px 15px;
+      -webkit-box-shadow: 1px 1px 5px 0px rgba(15, 35, 53, 0.2);
+      -moz-box-shadow: 1px 1px 5px 0px rgba(15, 35, 53, 0.2);
+      box-shadow: 1px 1px 5px 0px rgba(15, 35, 53, 0.2);
+      .org-name {
+        margin-top: 10px;
+        margin-left: 10px;
+        font-size: 15px;
+        padding-bottom: 5px;
+        border-bottom: 1px solid #ccc;
+        margin-right: 8px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: flex;
+        justify-content: space-between;
+        .org-name-title{ 
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis; 
+          max-width: 190px;
+        }
+      }
+      .org-description {
+        font-size: 12px;
+        margin-bottom: 8px;
+        margin-top: 5px;
+        margin-left: 10px;
+        font-style: oblique;
+      }
+      .org-lison-state {
+        font-size: 12px;
+        margin-bottom: 8px;
+        margin-top: 5px;
+        margin-left: 10px;
+      }
+      .org-label {
+        margin-right: 5px;
+        background: #ccc;
+        padding: 2px;
+        border-radius: 2px;
+        padding-right: 4px;
+      }
+      .org-due-date {
+        font-size: 12px;
+        margin-bottom: 8px;
+        margin-top: 5px;
+        margin-left: 10px;
+      }
+      .org-task-section {
+        font-size: 12px;
+        height: 80px;
+        padding: 10px;
+        width: 100%;
+        overflow-y: auto;
+      }
+      .task-line {
+        font-size: 11px;
+        margin-top: 2px;
+        display: flex;
+        justify-content: center;
+        border-bottom: 1px dashed #ccc;
+        border-top: 1px dashed #ccc;
+        margin: 7px;
+      }
+      .task-item {
+        background: #f7f2f2;
+        margin-bottom: 1px;
+        text-align: center;
+        .q-type {
+          float: left;
+          color: #8181af;
+          padding: 5px;
+        }
+        .view-task-icon {
+          margin: 8px;
+          cursor: pointer;
+        }
+        .trash-can-icon {
+          margin: 8px;
+          color: red;
+          cursor: pointer;
+        }
+        .deadline-item {
+          font-size: 10px;
+          font-style: oblique;
+          color: red;
+        }
+        .add-task-label {
+          margin-right: 4px;
+          cursor: pointer;
+        }
+      }
+      .bottom-part {
+        position: absolute;
+        display: -webkit-inline-box;
+        display: -ms-inline-flexbox;
+        display: inline-flex;
+        width: 100%;
+        -ms-flex-pack: distribute;
+        justify-content: space-around;
+        bottom: 0px;
+        background: black;
+        opacity: 0.2;
+        padding: 4px;
+        color: white;
+        .org-modified {
+          font-size: 14px;
+        }
+      }
+      .org-plus {
+        vertical-align: middle;
+        margin: 103px 100px;
+        font-size: 40px;
+      }
+    }
+  }
+  
+.nav-tabs>li.active>a,
+.nav-tabs>li.active>a:focus,
+.nav-tabs>li.active>a:hover {
+  color: #555;
+  cursor: default;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-bottom-color: transparent;
+}
+
+.nav-tabs>li>a {
+  margin-right: 2px;
+  line-height: 1.42857143;
+  border: 1px solid transparent;
+  border-radius: 4px 4px 0 0;
+}
+
+.nav>li>a {
+  position: relative;
+  display: block;
+  padding: 10px 15px;
+}
+
+.nav-tabs>li.active>a,
+.nav-tabs>li.active>a:focus,
+.nav-tabs>li.active>a:hover {
+  color: #555;
+  cursor: default;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-bottom-color: transparent;
+}
+
+a {
+  color: #337ab7;
+  text-decoration: none;
+}
+
+a {
+  background-color: transparent;
+}
+
+.nav-tabs>li {
+  float: left;
+  margin-bottom: -1px;
+}
+
+.nav>li {
+  position: relative;
+  display: block;
+}
+
+.nav-tabs {
+  border-bottom: 1px solid #ddd;
+}
+
+.nav {
+  padding-left: 0;
+  margin-bottom: 0;
+  list-style: none;
+}
+
+ol,
+ul {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+.header-title{
+  text-align: center;
+  margin: 20px;
+}
+.modal-dialog {
+  max-width: 690px;
+  margin: 1.75rem auto;
+}
+.deadline-text{
+  color: red;
+  font-weight: 600;
+}
+
+.scrollbar-task-creator {
+  float: left;
+  height: 80px;
+  width: 100%;
+  background: #fff;
+  overflow-y: auto;
+  margin-bottom: 15px;
+  overflow-x: hidden;
+}
+
+.scrollbar-task-creator::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  background-color: #F5F5F5;
+}
+
+.scrollbar-task-creator::-webkit-scrollbar {
+  width: 6px;
+  background-color: #F5F5F5;
+}
+
+.scrollbar-task-creator::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+  background-color: #555;
+}

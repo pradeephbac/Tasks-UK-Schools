@@ -1,0 +1,36 @@
+.analys-header{
+    .task-amount-cage{
+        height: 80px;
+        background: #f1f1f1;
+        text-align: center;
+        padding: 8px;
+        cursor: pointer;
+        z-index: 10000;
+        margin-right: 20px;
+        margin-bottom: 5px;
+        .amount-icon{
+            margin-right: 10px;
+            font-size: 30px;
+            color: #a09d9d;
+        }
+        .task-amount{
+            font-weight: 700;
+            font-size: 35px;
+        }
+        .analytics{
+            margin-right: 0px !important;
+        }
+        .task-title{
+            font-size: 10px;
+            color: #312a2a;
+            font-weight: 400;
+        }
+    }
+    .task-amount-cage:hover { 
+        border: 1px solid #8a6a6a;
+   }
+}
+.active-cage { 
+    border: 1px solid #8a6a6a;
+}
+/* Style the active class (and buttons on mouse-over) */

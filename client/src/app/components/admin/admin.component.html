@@ -1,0 +1,560 @@
+<ul class="nav nav-tabs">
+  <li class="tab-one-header active" [ngClass]="{ 'active' : step ==='header-one'}" (click)="step ='header-one'">
+    <a data-toggle="tab" href="#orgs-tab">Schools</a>
+  </li>
+  <li class="tab-two-header active" [ngClass]="{ 'active' : step ==='header-two'}" (click)="step ='header-two'">
+    <a data-toggle="tab" href="#tasks-tab">Global Tasks</a>
+  </li>
+</ul>
+
+<div class="tab-content">
+  <div id="orgs-tab" class="tab-pane fadein active">
+    <h3 class="header-title">Schools</h3>
+    <div id="messageDiv" class="row show-hide-message show-message">
+      <div [ngClass]="messageClass">
+        {{ message }}
+      </div>
+    </div>
+
+    <div class="scrollbar scrollbar-primary" id="style-1">
+      <div class="force-overflow">
+        <div class="exercise-grid">
+          <ul>
+
+            <li class="exercise-org" data-toggle="modal" data-target="#addNewSchool">
+              <i class="fa fa-plus org-plus"></i>
+            </li>
+            <li *ngFor="let organization of organizations" class="exercise-org">
+
+              <div class="face-front">
+                <div class="org-name">
+                  <span class="org-name-title">{{organization?.name}} </span>
+                  <span class="org-user-count pull-right">
+                    <i class="fa fa-expand" aria-hidden="true" style="margin-right: 5px;cursor:pointer;" (click)="expandOrganization(organization)"></i>
+                  </span>
+                </div>
+                <div class="org-description">{{organization.description}}</div>
+                <div class="org-lison-state">
+                  <span class="org-label">Owner</span>{{organization.admin.email}}
+                </div>
+                <div class="org-due-date">
+                  <span class="org-label">Created Date</span>{{organization.createdAt | date}}
+                </div>
+                <div class="task-line">Tasks</div>
+                <div class="org-task-section scrollbar-task scrollbar-primary style-class">
+                  <div *ngFor="let item of organization.tasks;let i = index">
+                    <div class="task-item">
+                      <span class="q-type" *ngIf="item?.task_type === 'ANSWER_QUESTION'">
+                        <i class="fa fa-question"></i>
+                      </span>
+                      <span class="q-type" *ngIf="item?.task_type === 'ITEM_TO_DO'">
+                        <i class="fa fa-check"></i>
+                      </span>
+                      <span class="q-type" *ngIf="item?.task_type === 'COMPLETE_QUESTIONNARE'">
+                        <i class="fa fa-list"></i>
+                      </span>
+                      <span>Task {{i+1}}</span>
+                      <span class="deadline-item">
+                        <i class="far fa-clock deadline-label"></i>{{item?.task.deadline | date}}</span>
+                      <span class="icon-section">
+                        <i class="fa fa-eye view-task-icon" (click)="expandTask(organization, item)"></i>
+                        <i class="fa fa-trash trash-can-icon"></i>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="task-item add-task">
+                    <div (click)="addTasksToOrg(organization)">
+                      <span>
+                        <i class="fa fa-plus add-task-label"></i>Task</span>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="bottom-part">
+                  <div class="org-modified">Last updated :{{organization.updatedAt | date}}</div>
+                  <div style="cursor: pointer;">
+                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="tasks-tab" class="tab-pane fade">
+    <h3 class="header-title">Tasks</h3>
+
+    <div class="scrollbar scrollbar-primary" id="style-1">
+      <div class="force-overflow">
+        <div class="exercise-grid">
+          <ul>
+
+            <li class="exercise-org" data-toggle="modal" data-target="#addTaskModal">
+              <i class="fa fa-plus org-plus"></i>
+            </li>
+
+            <li *ngFor="let task of tasks" class="exercise-org">
+
+              <div class="face-front">
+                <div class="org-name">
+                  <span class="org-name-title">{{task?.title}}</span>
+                  <span class="org-user-count pull-right">
+                    <i class="fa fa-expand" aria-hidden="true" style="margin-right: 5px;cursor:pointer;" (click)="expandTask(organization, task)"></i>
+                  </span>
+                </div>
+
+                <div class="org-lison-state">
+                  <span class="org-label">Task Type</span>{{task?.task_type}}
+                </div>
+                <div class="org-due-date">
+                  <span class="org-label">Created Date</span>{{task?.createdAt | date}}
+                </div>
+                <div class="task-line">Tasks</div>
+                <div class="org-task-section scrollbar-task scrollbar-primary style-class">
+
+                </div>
+                <div class="bottom-part">
+                  <div class="org-modified">DeadLine :{{task?.task.deadline | date}}</div>
+                  <div style="cursor: pointer;">
+                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                  </div>
+                </div>
+              </div>
+
+            </li>
+          </ul>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+<!-- Modal Popup Section Starts  from Here  -->
+
+
+<!-- Add New School Modal -->
+<div class="modal fade" id="addNewSchool" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add New School</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <h6 class="section-seperator"> General Data Section </h6>
+          <hr>
+          <div class="form-group row register-field">
+            <label for="name" class="col-sm-3 col-form-label">School Name</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" aria-describedby="namelHelp" id="name" placeholder="School name" [(ngModel)]="name"
+                name="name">
+              <small id="namelHelp" class="form-text text-muted">Enter School name here.</small>
+            </div>
+          </div>
+          <div class="form-group row register-field">
+            <label for="description" class="col-sm-3 col-form-label">Description</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" aria-describedby="descHelp" id="description" placeholder="description" [(ngModel)]="description"
+                name="description">
+              <small id="descHelp" class="form-text text-muted">Enter Your Description here.</small>
+            </div>
+          </div>
+          <hr>
+          <h6 class="section-seperator"> Admin Section </h6>
+          <hr>
+          <div class="form-group row register-field">
+            <label for="inputEmail3" class="col-sm-3 col-form-label">Email</label>
+            <div class="col-sm-9">
+              <input type="email" class="form-control" id="inputEmail3" placeholder="Email" [(ngModel)]="admin_email" name="admin_email">
+              <small id="emailHelp" class="form-text text-muted">Enter Admin Email</small>
+            </div>
+          </div>
+          <div class="form-group row register-field">
+            <label for="username" class="col-sm-3 col-form-label">Username</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" id="username" placeholder="Username" [(ngModel)]="admin_username" name="admin_username">
+              <small id="usernameHelp" class="form-text text-muted">Enter Admin Username</small>
+            </div>
+          </div>
+          <div class="form-group row register-field">
+            <label for="inputPassword3" class="col-sm-3 col-form-label">Password</label>
+            <div class="col-sm-9">
+              <input type="password" class="form-control" id="inputPassword3" placeholder="Password" [(ngModel)]="admin_password" name="description">
+              <small id="passwordHelp" class="form-text text-muted">Enter Admin Password</small>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="add-school-dismiss">Close</button>
+        <button type="button" class="btn btn-primary" (click)="saveSchool()">Save New School</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<button id="openExpandedSchool" [hidden]="true" data-toggle="modal" data-target="#expandedSchool">Open Modal</button>
+<!-- Expanded Modal -->
+<div class="modal fade" id="expandedSchool" tabindex="-1" role="dialog" aria-labelledby="expandedSchool" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">{{selectedOrg?.name}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row" style="padding: 10px">
+          <div class="col-sm-3">
+            <span style="    background: #ddd;
+                  padding: 6px;
+                  border-radius: 4px;">Description</span>
+          </div>
+          <div class="col-sm-9">{{selectedOrg?.description}}</div>
+        </div>
+        <div class="row" style="padding: 10px">
+          <div class="col-sm-3">
+            <span style="    background: #ddd;
+                      padding: 6px;
+                      border-radius: 4px;">Admin</span>
+          </div>
+          <div class="col-sm-9">
+            <p>
+              <i>{{selectedOrg?.admin.email}}</i>
+            </p>
+          </div>
+        </div>
+
+        <hr>
+        <h6 class="section-seperator"> Task Section </h6>
+        <hr>
+        <div>Add Tasks Here</div>
+        <div id="build-wrap"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="add-school-dismiss">Close</button>
+        <button type="button" class="btn btn-primary" (click)="updateSchool(selectedOrg)">Update School</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<button id="openExpandedTask" [hidden]="true" data-toggle="modal" data-target="#expandedTask">Open Modal</button>
+
+<!-- View Task Modal -->
+<div class="modal fade" id="expandedTask" tabindex="-1" role="dialog" aria-labelledby="expandedTask" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">{{selectedTask?.title}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div style="margin: 20px;">
+          <div class="form-group row" *ngIf="selectedTask && selectedTask.task.deadline">
+            <label class="col-sm-4" style="text-align: right;
+                position: relative;
+                top: 5px;
+                font-weight: 600;">Deadline </label>
+            <p class="form-control col-sm-4" style="text-align: center;background: #ddd;"> {{selectedTask.task.deadline | date}} </p>
+          </div>
+          <div class="form-group row" style="    padding: 10px;
+              border: 1px dashed #ddd;
+              border-radius: 3px;" *ngIf="selectedTask && selectedTask.task_type === 'ITEM_TO_DO'">
+            <label class="col-sm-4">To Do Item </label>
+            <label style="margin-left: -15px;" class="col-sm-4">{{selectedTask?.task.label}}</label>
+          </div>
+          <div class="form-group" style="    padding: 10px;
+              border: 1px dashed #ddd;
+              border-radius: 3px;" *ngIf="selectedTask && selectedTask.task_type === 'ANSWER_QUESTION'">
+            <label>{{selectedTask?.task.label}}</label>
+            <input type="text" class="form-control" name="name" placeholder="type your answer here">
+          </div>
+          <div class="form-group" style="    padding: 10px;
+              border: 1px dashed #ddd;
+              border-radius: 3px;" *ngIf="selectedTask && selectedTask.task_type === 'COMPLETE_QUESTIONNARE'">
+            <div *ngFor="let questionItem of selectedTask.task.taskArray; let m = index;">
+
+              <div class="form-group" *ngIf="questionItem.questionnareType === 'QUESTION'">
+                <div>
+                  <span class="index-val">{{m + 1}}.)</span>
+                  <label class="margin-left:5px;">{{questionItem.label}}</label>
+                </div>
+                <input type="text" class="form-control" name="name" placeholder="type your answer here">
+              </div>
+              <div class="form-group" *ngIf="questionItem.questionnareType === 'NUMBER'">
+                <div>
+                  <span class="index-val">{{m + 1}}.)</span>
+                  <label class="margin-left:5px;">{{questionItem.label}}</label>
+                </div>
+                <input type="number" class="form-control" name="name" placeholder="type your answer here">
+              </div>
+              <div class="form-group" *ngIf="questionItem.questionnareType === 'CHECKBOXES'">
+
+                <div class="checkbox">
+                  <div>
+                    <span class="index-val">{{m + 1}}.)</span>
+                    <label class="margin-left:5px;">{{questionItem.label}}</label>
+                  </div>
+                  <p style="margin-left: 25px;" *ngFor="let possibleAnswerItem of questionItem.answers">
+
+                    <input type="checkbox" name="check_box_objects" [(ngModel)]="possibleAnswerItem.is_selected"> {{possibleAnswerItem.answer}}
+                  </p>
+                </div>
+              </div>
+
+              <div class="form-group" *ngIf="questionItem.questionnareType === 'RADIO'">
+                <div>
+                  <span class="index-val">{{m + 1}}.)</span>
+                  <label> {{questionItem.label}}</label>
+                </div>
+                <p style="margin-left: 25px;" class="radio" *ngFor="let possibleAnswerItem of questionItem.answers">
+                  <input type="radio" name="radio_objects" [(ngModel)]="possibleAnswerItem.is_selected" [value]="possibleAnswerItem.answer"> {{possibleAnswerItem.answer}}
+                </p>
+              </div>
+              <div class="form-group" *ngIf="questionItem.questionnareType === 'BOOLEAN'">
+                <div>
+                  <span class="index-val">{{m + 1}}.)</span>
+                  <label class="margin-left:5px;">{{questionItem.label}}</label>
+                </div>
+
+                <p style="margin-left: 25px;" *ngFor="let possibleAnswerBooleanItem of questionItem.answers">
+
+                  <input type="radio" name="bool_items" [(ngModel)]="possibleAnswerBooleanItem.is_selected" [value]="possibleAnswerBooleanItem.answer"> {{possibleAnswerBooleanItem.answer}}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="add-school-dismiss">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<button id="addTaskButton" [hidden]="true" data-toggle="modal" data-target="#addTaskModal">Open Modal</button>
+
+<!-- Add Task Modal -->
+<div class="modal fade" id="addTaskModal" tabindex="-1" role="dialog" aria-labelledby="expandedTask" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <!-- to {{newTaskOrg?.name}} -->
+        <h5 class="modal-title col-md-6" id="exampleModalLabel">Add New Task</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group row" style="margin-left: 10px;">
+          <div class="col-md-6" style="display: flex;">
+            <label class="col-sm-5" style="    font-size: 13px;
+                position: relative;
+                top: 7px;">Select Task Type</label>
+            <select name="questionType" class="form-control col-sm-6" [(ngModel)]="questionType" style="    height: 30px;
+                font-size: 13px;">
+              <option *ngFor="let type of types" [value]="type.id">{{type.name}}</option>
+            </select>
+          </div>
+          <div class="col-md-4" style="display: flex;">
+            <label class="col-sm-5">Deadline*</label>
+            <input style="    width: 233px;
+                font-size: 13px;
+                height: 30px;
+                background: #ddd;
+                border: 1px solid #9c8b8b;
+                text-align: center;" type="date" class="form-control col-md-7" name="date" [(ngModel)]="newTask.deadline">
+          </div>
+
+        </div>
+
+        <hr>
+
+
+
+        <div class="row" style="display: flex;">
+          <label class="col-sm-2"></label>
+          <label class="col-sm-2">Task Title*</label>
+          <input style=" font-size: 13px;
+                height: 30px; " type="text" class="form-control col-md-6" name="title" [(ngModel)]="newTask.title">
+        </div>
+
+
+
+        <div class="detail-wrapper scrollbar-question-creator style-question-creator">
+          <div *ngIf="questionType === 'ITEM_TO_DO'">
+            <div class="form-group">
+              <label>Add Item To Do</label>
+              <input type="text" class="form-control" name="name" [(ngModel)]="newTask.label">
+
+            </div>
+
+          </div>
+          <div *ngIf="questionType === 'ANSWER_QUESTION'">
+            <div class="form-group">
+              <label>Add Your Question Label*</label>
+              <input type="text" class="form-control" name="name" [(ngModel)]="newTask.label">
+
+            </div>
+          </div>
+
+          <div *ngIf="questionType === 'COMPLETE_QUESTIONNARE'">
+
+            <div class="question-wrapper" *ngFor="let question of questions; let j=index;">
+              <p class="question-index">
+                <span class="index-val">{{j + 1}}</span>
+              </p>
+              <div class="form-group row" style="    position: relative;
+                top: -44px;
+                left: 70px;">
+                <label class="col-sm-3" style="    position: relative;
+                  top: 6px">Select Question Type</label>
+                <select name="questionnareType" class="form-control col-sm-4" [(ngModel)]="question.questionnareType">
+                  <option *ngFor="let questionnareItem of QuesnnareItemTypes" [value]="questionnareItem.id">{{questionnareItem.name}}</option>
+                </select>
+              </div>
+
+              <div *ngIf="question.questionnareType === 'QUESTION'" style="    position: relative;
+                top: -55px;">
+                <div class="form-group">
+                  <label>Add Your Question Label*</label>
+                  <input type="text" class="form-control question-input" name="name" [(ngModel)]="question.label">
+                </div>
+              </div>
+              <div *ngIf="question.questionnareType === 'NUMBER'" style="    position: relative;
+                top: -55px;">
+                <div class="form-group">
+                  <label>Add Your Question Label*</label>
+                  <input type="text" class="form-control question-input" name="name" [(ngModel)]="question.label">
+                </div>
+              </div>
+              <div *ngIf="question.questionnareType === 'CHECKBOXES'" style="    position: relative;
+                top: -55px;">
+                <div class="form-group">
+                  <label>Add Your Question Label*</label>
+                  <input type="text" class="form-control question-input" name="name" [(ngModel)]="question.label">
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-5">Add Possible Answers*(Check Boxes)</label>
+                  <div class="col-md-6">
+                    <div style="  margin-bottom: 5px;" *ngFor="let possibleAnswer of question.possibleAnswers">
+                      <input type="text" class="form-control question-input" name="name" [(ngModel)]="possibleAnswer.answer">
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <button style="font-size: 13px;
+                      position: relative;margin-right: 75px; " class="btn btn-default pull-right" (click)="addAnswers(question.possibleAnswers, question)">Add Possible Answers</button>
+                </div>
+
+              </div>
+              <div *ngIf="question.questionnareType === 'RADIO'" style="    position: relative;
+                top: -55px;">
+                <div class="form-group">
+                  <label>Add Your Question Label*</label>
+                  <input type="text" class="form-control question-input" name="name" [(ngModel)]="question.label">
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-5">Add Possible Answers* (Radio Buttons)</label>
+                  <div class="col-md-6">
+                    <div style="  margin-bottom: 5px;" *ngFor="let possibleAnswer of  question.possibleAnswersRadio">
+                      <input type="text" class="form-control question-input" name="name" [(ngModel)]="possibleAnswer.answer">
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <button style="font-size: 13px;
+                    position: relative;margin-right: 75px; " class="btn btn-default pull-right" (click)="addAnswersForRadio(question.possibleAnswersRadio, question)">Add Possible Answers</button>
+                </div>
+
+              </div>
+              <div *ngIf="question.questionnareType === 'BOOLEAN'" style="    position: relative;
+                top: -55px;">
+                <div class="form-group">
+                  <label>Add Your Question Label*</label>
+                  <input type="text" class="form-control question-input" name="name" [(ngModel)]="question.label">
+                </div>
+                <div class="row">
+                  <div class="form-group col-md-6" *ngFor="let possibleBoolean of  question.possibleBooleans; let k = index;">
+                    <label>Option {{k+1}}*</label>
+                    <input type="text" class="form-control question-input" name="name" [(ngModel)]="possibleBoolean.answer">
+                  </div>
+                </div>
+                <div>
+                  <button *ngIf="question.possibleBooleans.length <= 1" style="font-size: 13px;
+                      position: relative; " class="btn btn-default" (click)="addAnswersForBoolean(question.possibleBooleans, question)">Add Possible Answers</button>
+                </div>
+              </div>
+            </div>
+            <div class="row" style="    margin: 10px;
+              width: 100%;
+              position: relative;">
+              <button style="    font-size: 12px;
+                  margin-left: 9px;
+                  margin-top: -10px;" type="button" class="btn btn-default pull-right" (click)="addQuestions(questions)">Add New Question</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="clearAll()" id="add-task-clear">Clear All</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="add-task-dismiss">Close</button>
+        <button type="button" *ngIf="!(questionType === 'COMPLETE_QUESTIONNARE')" class="btn btn-primary" (click)="addTask(newTaskOrg, questionType, newTask)">Update Task</button>
+        <button type="button" *ngIf="questionType === 'COMPLETE_QUESTIONNARE'" class="btn btn-primary" (click)="addTaskWithQuestionnare(newTaskOrg, questionType, questions, newTask )">Update Task</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal -->
+
+<button id="opentaskSelectionModal" [hidden]="true" data-toggle="modal" data-target="#taskSelectionModal">Open Modal</button>
+<!-- Expanded Modal -->
+<div class="modal fade" id="taskSelectionModal" tabindex="-1" role="dialog" aria-labelledby="taskSelectionModal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Task List</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Select from Global Task List
+        <p style="margin-left: 25px;" *ngFor="let task of tasks">
+
+          <input type="checkbox" name="check_box_objects" [(ngModel)]="task.is_selected">{{task?.title}}
+        </p>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="add-task-to-school-dismiss">Close</button>
+        <button type="button" class="btn btn-primary" (click)="addtasksToOrganization(tasks)">Insert Tasks</button>
+
+      </div>
+    </div>
+  </div>
+</div>

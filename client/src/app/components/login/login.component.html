@@ -1,0 +1,84 @@
+<!-- Custom Success/Error Message -->
+<div class="row show-hide-message">
+  <div [ngClass]="messageClass" class="adjust-message-length">
+    {{ message }}
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-8">
+    <div>  <img class="login-img" src="../../../assets/login_img.jpg"/></div>
+    </div>
+    <div *ngIf="!fogotPassword" class="col-md-4 jumbotron" style="margin-bottom: 0px !important;    background: #f9fff2;">
+        <h3 class="page-header">Login For Online Tool</h3>
+<hr>        
+      <form [formGroup]="loginForm" (submit)="onLoginSubmit()">
+        <!--div class="form-group">
+          <label for="username">Username</label>
+          <div [ngClass]="{'has-error': loginForm.controls.username.errors && loginForm.controls.username.dirty, 'has-success': loginForm.controls.username.valid && loginForm.controls.username.dirty }">
+            <input class="form-control" type="text" name="username" formControlName="username" [autofocus]="true"/>
+            <ul class="help-block">
+              <li *ngIf="loginForm.controls.username.errors?.required && loginForm.controls.username.dirty">This field is required.</li>
+            </ul>
+          </div>
+        </div-->
+        <div class="form-group">
+            <label for="username">Email</label>
+            <div [ngClass]="{'has-error': loginForm.controls.email.errors && loginForm.controls.email.dirty, 'has-success': loginForm.controls.email.valid && loginForm.controls.email.dirty }">
+              <input class="form-control" type="email" name="email" formControlName="email" [autofocus]="true"/>
+              <ul class="help-block">
+                <li *ngIf="loginForm.controls.email.errors?.required && loginForm.controls.email.dirty">This field is required.</li>
+              </ul>
+            </div>
+          </div>
+        <div class="form-group">
+          <label for="username">Password</label>
+          <div [ngClass]="{'has-error': loginForm.controls.password.errors && loginForm.controls.password.dirty, 'has-success': loginForm.controls.password.valid && loginForm.controls.password.dirty }">
+            <input class="form-control" type="password" name="password" formControlName="password" />
+            <ul class="help-block">
+              <li *ngIf="loginForm.controls.password.errors?.required && loginForm.controls.password.dirty">This field is required.</li>
+            </ul>
+          </div>
+        </div>
+        <input [disabled]="!loginForm.valid || processing" type="submit" class="btn btn-primary login-btn" value="Login" /> <span (click)="fogotPassword = true" style="cursor:pointer"><u>Change password</u></span>
+      </form>
+      </div>
+      <div *ngIf="fogotPassword" class="col-md-4 jumbotron" style="margin-bottom: 0px !important;    background: #f9fff2;">
+          <h3 class="page-header">Change Your Password</h3>
+          <hr>        
+<form [formGroup]="forgotPasswordForm" (submit)="onForgotPasswordSubmit()">
+
+    <div class="form-group">
+        <label for="username">Email</label>
+        <div [ngClass]="{'has-error': forgotPasswordForm.controls.email.errors && forgotPasswordForm.controls.email.dirty, 'has-success': forgotPasswordForm.controls.email.valid && forgotPasswordForm.controls.email.dirty }">
+          <input class="form-control" type="email" name="email" formControlName="email" [autofocus]="true"/>
+          <ul class="help-block">
+            <li *ngIf="forgotPasswordForm.controls.email.errors?.required && forgotPasswordForm.controls.email.dirty">This field is required.</li>
+          </ul>
+        </div>
+      </div>
+    <div class="form-group">
+      <label for="username">Old Password</label>
+      <div [ngClass]="{'has-error': forgotPasswordForm.controls.old_password.errors && forgotPasswordForm.controls.old_password.dirty, 'has-success': forgotPasswordForm.controls.old_password.valid && forgotPasswordForm.controls.old_password.dirty }">
+        <input class="form-control" type="old_password" name="old_password" formControlName="old_password" />
+        <ul class="help-block">
+          <li *ngIf="forgotPasswordForm.controls.old_password.errors?.required && forgotPasswordForm.controls.old_password.dirty">This field is required.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="form-group">
+        <label for="username">New Password</label>
+        <div [ngClass]="{'has-error': forgotPasswordForm.controls.new_password.errors && forgotPasswordForm.controls.new_password.dirty, 'has-success': forgotPasswordForm.controls.new_password.valid && forgotPasswordForm.controls.new_password.dirty }">
+          <input class="form-control" type="new_password" name="new_password" formControlName="new_password" />
+          <ul class="help-block">
+            <li *ngIf="forgotPasswordForm.controls.new_password.errors?.required && forgotPasswordForm.controls.new_password.dirty">This field is required.</li>
+          </ul>
+        </div>
+      </div>
+
+
+
+
+    <input [disabled]="!forgotPasswordForm.valid || processing" type="submit" class="btn btn-primary login-btn" value="Reset" /> <span (click)="fogotPassword = false" style="cursor:pointer"><u>back to login</u></span>
+  </form>
+      </div>
+</div>
